@@ -1,0 +1,349 @@
+﻿<Window x:Class="AMA_Card_Reader.CardReaderView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:AMA_Card_Reader.ViewModels"
+        mc:Ignorable="d"
+        Title="AMA Card Reader" 
+        Height="800"
+        Width="1400"
+        Background="LightGray">
+
+    <Window.DataContext>
+        <viewmodels:CardReaderViewModel/>
+    </Window.DataContext>
+
+    <DockPanel>
+        <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem.Style>
+                    <Style>
+                        <Setter Property="MenuItem.FontSize" Value="24" />
+                    </Style>
+                </MenuItem.Style>
+                <MenuItem Name="MenuOpen" HorizontalAlignment="Left" Header="Open" Click="MenuOpen_Click"/>
+                <MenuItem Name="MenuCreate" HorizontalAlignment="Left" Header="New" Click="MenuCreate_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Name="outerGrid" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Name="gridLeftSide" Grid.Column="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Name="gridFileName" Grid.Row="0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Margin="0,10,10,10" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Open File: " FontSize="24"/>
+                        <TextBlock Name="txtFileName" FontSize="24"/>
+                    </StackPanel>
+
+                    <StackPanel Name="stckPnlFilterSection">
+
+                    </StackPanel>
+                </Grid>
+
+                <ListView Name="lvAMAEntries" 
+                          ItemsSource="{Binding Entries}"
+                          Grid.Row="1"
+                          TextElement.FontSize="22"
+                          
+                          SelectionChanged="LvAMAEntries_SelectionChanged"
+                          ScrollViewer.CanContentScroll="True" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Row #" Width="60">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding RowNumber}" FontSize="20" Foreground="Black"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Name" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" FontSize="20" Foreground="Black"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="AMA #" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding AMACardNumber}" FontSize="20" Foreground="Black"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+
+            <Grid Name="gridRightSide" Grid.Column="1" Margin="0,50,0,0" Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Name="dataGrid" FocusManager.IsFocusScope="True" GotFocus="Grid_GotFocus">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel >
+                            <TextBlock Text="First Name" FontSize="25"/>
+                            <TextBox Name="txtFirstName" FontSize="20" Width="160" MaxLength="13"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                            <TextBlock Text="Last Name" FontSize="25"/>
+                            <TextBox Name="txtLastName" FontSize="20" Width="180" MaxLength="15"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                            <TextBlock Text="AMA #"  FontSize="25"/>
+                            <TextBox Name="txtAMANumber"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="3">
+                            <TextBlock Text="Expiration:" FontSize="25"/>
+                            <TextBox Name="txtExpiration" FontSize="20" Width="Auto" MaxLength="7"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,15,0,0" Grid.Column="4">
+                            <Viewbox Height="25">
+                                <RadioButton Name="rbDualSport"  GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport"/>
+                            </Viewbox>
+                            <Viewbox Margin="0,5,0,0" Height="25">
+                                <RadioButton Name="rbAdventure" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Adventure"/>
+                            </Viewbox>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Address" FontSize="25"/>
+                            <TextBox Name="txtAddress" FontSize="20" Width="280" MaxLength="25" />
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                            <TextBlock Text="City" FontSize="25"/>
+                            <TextBox Name="txtCity" FontSize="20" Width="180" MaxLength="15"/>
+                        </StackPanel>
+
+                        <StackPanel  Margin="30,0,0,0" Grid.Column="2">
+                            <TextBlock Text="State" FontSize="25"/>
+                            <TextBox Name="txtState" FontSize="20" Width="Auto" MaxLength="2"/>
+                        </StackPanel>
+
+                        <StackPanel  Margin="30,0,0,0" Grid.Column="3">
+                            <TextBlock Text="Zipcode" FontSize="25"/>
+                            <TextBox Name="txtZipcode"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="5" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Phone #" FontSize="25"/>
+                            <TextBox Name="txtPhoneNumber" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                            <TextBlock Text="Email" FontSize="25"/>
+                            <TextBox Name="txtEmail" FontSize="20" Width="300"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                            <TextBlock FontSize="30" Text="Rider Number" FontWeight="UltraBold"/>
+                            <TextBox FontSize="20" Name="txtRideNumber" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Make" FontSize="25"/>
+                            <ComboBox Name="cbMake" FontSize="20" IsEditable="True" Width="200" ItemsSource="{Binding Vehicles}" DisplayMemberPath="Name"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                            <TextBlock Text="Model" FontSize="25"/>
+                            <ComboBox Name="cbModels" FontSize="20" IsEditable="True" Width="200" ItemsSource="{Binding SelectedItem.Models, ElementName=cbMake}"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                            <TextBlock Text="CC" FontSize="25"/>
+                            <TextBox Name="txtCC" FontSize="20" Width="60" MaxLength="4" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" />
+                        </StackPanel>
+
+                        <StackPanel Margin="30,0,0,0" Grid.Column="3">
+                            <TextBlock Text="Year" FontSize="25"/>
+                            <TextBox Name="txtYear" FontSize="20" Width="60" MaxLength="4" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
+                        <StackPanel Margin="5,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock Text="Dabbers Amount:" FontSize="30" FontWeight="Bold"/>
+                                    <TextBox Name="txtAmount" FontSize="20" PreviewTextInput="OnlyAllowCurrency_PreviewTextInput"/>
+                                </StackPanel>
+
+                                <TextBlock Margin="20,5,0,0" Name="txtTotalCumulativePayment" FontSize="25" FontWeight="Light"/>
+                                
+                                <TextBlock Margin="30,12,0,0" Text="Day 1" FontSize="25"/>
+                                <CheckBox  Margin="5,-5,0,0" Name="checkboxDay1" Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+
+                                <TextBlock Margin="30,12,0,0" Text="Day 2"  FontSize="25" />
+                                <CheckBox  Margin="5,-5,0,0" Name="checkboxDay2"  Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+
+                                <TextBlock Margin="20,12,0,0" Text="Camping" FontSize="25"/>
+                                <CheckBox  Margin="5,-5,0,0" Name="checkboxCamping" Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    </CheckBox.LayoutTransform>
+                                </CheckBox>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,30,0,0" Orientation="Horizontal">
+                                <StackPanel Margin="0,-30,10,10">
+                                    <TextBlock Text="Pay Method:" FontWeight="Bold" FontSize="25"/>
+                                    <ComboBox Name="cbPaymentMethod" FontSize="20">
+                                        <ComboBoxItem>Cash</ComboBoxItem>
+                                        <ComboBoxItem>Check</ComboBoxItem>
+                                        <ComboBoxItem>Credit Card</ComboBoxItem>
+                                    </ComboBox>
+                                </StackPanel>
+                                <TextBlock Text="# BBQ" FontSize="25" FontWeight="SemiBold"/>
+                                <TextBox Margin="10,-15,0,0" Name="txtNumBarbecue" FontSize="25" Width="25" MaxLength="1" PreviewTextInput="TxtNumBarbecue_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
+                                <TextBlock Margin="10,-15,0,0" Name="txtNumRemainingBarbecue" FontWeight="Light" Width="Auto" FontSize="25" VerticalAlignment="Center" />
+                                <TextBlock Margin="10,0,0,0" Text="# Shirts" FontWeight="SemiBold" FontSize="25"/>
+                                <TextBox Margin="10,-15,0,0" FontSize="20" Name="txtNumShirts" Width="25" MaxLength="1" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" DataContext="3" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
+
+                               
+                                <TextBlock FontWeight="UltraBold" Margin="20,0,0,0" Text="Total Payment" FontSize="30"  />
+                                <TextBlock Margin="10,-5,10,10" Padding="3" Width="75" Name="txtCombinedPayment" FontSize="30" Background="White" Foreground="Black"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
+                        <Grid Margin="5,5,5,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Text="AMA Payment:" FontSize="25" FontWeight="Bold"/>
+                                <TextBox Name="txtAMAAmount" FontSize="20" IsEnabled="False"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="20,0,0,0" Grid.Column="1">
+                                <TextBlock Name="txtTotalAMACumulativePayment" FontSize="25" FontWeight="Light"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="15,-5,0,0" Orientation="Horizontal"  Grid.Column="2">
+                                <TextBlock Margin="5,15,0,0" Text=" AMA Signup" FontSize="25" FontWeight="Bold"/>
+                                
+                                <Viewbox Height="25" Margin="10,13,0,0">
+                                    <RadioButton Name="rbNone" Checked="RbNone_Checked" GroupName="AMAOptions" FontSize="22" Content="None" Padding="0,-10,0,0"/>
+                                </Viewbox>
+                                <Viewbox Height="25" Margin="10,13,0,0">
+                                    <RadioButton Name="rbAnnual" Checked="RbAnnual_Checked" GroupName="AMAOptions" FontSize="22" Content="Annual" Padding="0,-10,0,0"/>
+                                </Viewbox>
+                                <Viewbox Height="25" Margin="10,13,0,0">
+                                    <RadioButton Name="rb1Day" Checked="Rb1Day_Checked"  GroupName="AMAOptions" FontSize="22" Content="1 Day" Padding="0,-10,0,0"/>
+                                </Viewbox>
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Margin="0,30,0,0"  Grid.Row="1" Name="stkpnlButtonsList" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Margin="5" Background="Turquoise" Name="btnLoadData" Click="BtnScanData_Click" Focusable="false">
+                            <TextBlock Margin="5" FontSize="25" Text="Scan Card"/>
+                        </Button>
+                        <Button Margin="5" Background="Turquoise" Grid.Column="1" Name="BtnAddEntry" Click="BtnAddEntry_Click" Focusable="false">
+                            <TextBlock  Margin="5" FontSize="25" Text="Add Entry"/>
+                        </Button>
+                        <Button Margin="5" Background="Turquoise" Grid.Column="2" Name="BtnClear" Click="BtnClear_Click" Focusable="false" Visibility="Collapsed">
+                            <TextBlock  Margin="5" FontSize="25" Text="Clear"/>
+                        </Button>
+                        <Button Margin="5" Background="Turquoise" Grid.Column="3" Name="BtnDelete" Click="BtnDelete_Click" Focusable="false" Visibility="Collapsed">
+                            <TextBlock  Margin="5" FontSize="25" Text="Delete"/>
+                        </Button>
+                        <Button Margin="5" Background="Turquoise" Grid.Column="4" Name="BtnUpdate" Click="BtnUpdate_Click" Focusable="false" Visibility="Collapsed">
+                            <TextBlock  Margin="5" FontSize="25" Text="Update Row"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

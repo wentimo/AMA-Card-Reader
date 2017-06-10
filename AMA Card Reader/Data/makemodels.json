@@ -1,0 +1,56 @@
+﻿{
+  "vehicles": [
+    {
+      "make": "",
+      "models": [ "" ]
+    },
+    {
+      "make": "KTM",
+      "models": [ "EXC", "EXC-F", "EXC-W", "ECW", "XC-F", "XC-W", "ENDURO", "LC4", "MXC", "RXC", "SX", "SX-F", "WC" ]
+    },
+    {
+      "make": "beta",
+      "models": [ "xtrainer", "RR", "RS" ]
+    },
+    {
+      "make": "BMW",
+      "models": [ "GA", "GSA" ]
+    },
+    {
+      "make": "GasGas",
+      "models": [ "EC", "FSE" ]
+    },
+    {
+      "make": "Honda",
+      "models": [ "CM", "CRF", "XL", "XR" ]
+    },
+    {
+      "make": "Husqvarna",
+      "models": [ "FES", "TE", "TXC", "WR" ]
+    },
+    {
+      "make": "Husaberg",
+      "models": [ "FE", "TE" ]
+    },
+    {
+      "make": "Kawasaki",
+      "models": [ "KDX", "KLR", "KLX", "KY", "KX" ]
+    },
+    {
+      "make": "Sherco",
+      "models": [ "sef", "sef-r" ]
+    },
+    {
+      "make": "Suzuki",
+      "models": [ "DR", "DRZ", "RM", "RMX", "RMZ" ]
+    },
+    {
+      "make": "Triumph",
+      "models": [ "Tiger" ]
+    },
+    {
+      "make": "Yamaha",
+      "models": [ "TT", "TW", "WR", "XT", "YZ", "YZF" ]
+    }
+  ]
+}
