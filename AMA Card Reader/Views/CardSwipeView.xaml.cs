@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace AMA_Card_Reader.Views
@@ -14,7 +15,15 @@ namespace AMA_Card_Reader.Views
 
         private async void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            txtData.Text = await Framework.Framework.AddKeyToString(e.Key, txtData.Text);
+            if ((e.KeyboardDevice.IsKeyDown(Key.LeftShift) ||e.KeyboardDevice.IsKeyDown(Key.RightShift)))  
+            {
+                if (e.Key == Key.V)
+                    txtData.Text = Clipboard.GetText();
+            }
+            else
+            {
+                txtData.Text = await Framework.Framework.AddKeyToString(e.Key, txtData.Text);
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
