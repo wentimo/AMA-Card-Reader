@@ -14,7 +14,6 @@ namespace AMA_Card_Reader
 {
     public partial class CardReaderView : Window
     {
-        //private string vm.FilePath;
         private bool EditMode;
         private CardReaderViewModel vm;
 
@@ -451,7 +450,7 @@ namespace AMA_Card_Reader
 
         private void OnlyAllow1ThroughN_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            var n = Convert.ToInt32((sender as TextBox).DataContext);
+            var n = 3;
 
             if (!char.IsDigit(e.Text, e.Text.Length - 1))
             {

@@ -61,6 +61,7 @@
     <Compile Include="Converter\StringToVisibilityConverter.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Notifiable.cs" />
+    <Compile Include="Validator\OneThroughThreeValidationRule.cs" />
     <Compile Include="Views\CardSwipeView.xaml.cs">
       <DependentUpon>CardSwipeView.xaml</DependentUpon>
     </Compile>

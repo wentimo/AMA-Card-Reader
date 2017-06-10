@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:AMA_Card_Reader.ViewModels"
+        xmlns:validator="clr-namespace:AMA_Card_Reader.Validator"
         mc:Ignorable="d"
         Title="AMA Card Reader" 
         Height="800"
@@ -267,11 +268,9 @@
                                 <TextBox Margin="10,-15,0,0" Text="{Binding SelectedEntry.Barbecue}" FontSize="25" Width="25" MaxLength="1" PreviewTextInput="TxtNumBarbecue_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
                                 <TextBlock Margin="10,-15,0,0" Name="txtNumRemainingBarbecue" FontWeight="Light" Width="Auto" FontSize="25" VerticalAlignment="Center" />
                                 <TextBlock Margin="10,0,0,0" Text="# Shirts" FontWeight="SemiBold" FontSize="25"/>
-                                <TextBox Margin="10,-15,0,0" FontSize="20" Text="{Binding SelectedEntry.TShirt}" Width="25" MaxLength="1" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
-                                <!--PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput"-->
-                                <!--TextChanged="UpdatePaidAmount"-->
+                                <TextBox Margin="10,-15,0,0" FontSize="20" Width="25" MaxLength="1" TextChanged="UpdatePaidAmount" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" VerticalAlignment="Center"/>
 
-                               
+
                                 <TextBlock FontWeight="UltraBold" Margin="20,0,0,0" Text="Total Payment" FontSize="30"  />
                                 <TextBlock Margin="10,-5,10,10" Padding="3" Width="75" Name="txtCombinedPayment" FontSize="30" Background="White" Foreground="Black"/>
                             </StackPanel>
