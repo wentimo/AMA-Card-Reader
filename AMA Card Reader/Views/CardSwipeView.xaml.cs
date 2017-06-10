@@ -15,7 +15,7 @@ namespace AMA_Card_Reader.Views
 
         private async void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.KeyboardDevice.IsKeyDown(Key.LeftShift) ||e.KeyboardDevice.IsKeyDown(Key.RightShift)))  
+            if ((e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) ||e.KeyboardDevice.IsKeyDown(Key.RightCtrl)))  
             {
                 if (e.Key == Key.V)
                     txtData.Text = Clipboard.GetText();

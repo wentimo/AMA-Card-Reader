@@ -27,7 +27,7 @@
             </MenuItem>
         </Menu>
 
-        <Grid Name="outerGrid" Visibility="Collapsed">
+        <Grid><!--Visibility="{Binding FilePath, Converter={StaticResource StringToVisibilityConverter}}">-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -48,11 +48,7 @@
 
                     <StackPanel Margin="0,10,10,10" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="Open File: " FontSize="24"/>
-                        <TextBlock Name="txtFileName" FontSize="24"/>
-                    </StackPanel>
-
-                    <StackPanel Name="stckPnlFilterSection">
-
+                        <TextBlock Text="{Binding FilePath, Converter={StaticResource FilePathToFileNameConverter}}" FontSize="24"/>
                     </StackPanel>
                 </Grid>
 
@@ -60,6 +56,7 @@
                           ItemsSource="{Binding Entries}"
                           Grid.Row="1"
                           TextElement.FontSize="22"
+                          SelectedItem="{Binding SelectedEntry}"
                           
                           SelectionChanged="LvAMAEntries_SelectionChanged"
                           ScrollViewer.CanContentScroll="True" 
@@ -116,22 +113,22 @@
 
                         <StackPanel >
                             <TextBlock Text="First Name" FontSize="25"/>
-                            <TextBox Name="txtFirstName" FontSize="20" Width="160" MaxLength="13"/>
+                            <TextBox Text="{Binding SelectedEntry.Firstname}" FontSize="20" Width="160" MaxLength="13"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="1">
                             <TextBlock Text="Last Name" FontSize="25"/>
-                            <TextBox Name="txtLastName" FontSize="20" Width="180" MaxLength="15"/>
+                            <TextBox Text="{Binding SelectedEntry.Lastname}" FontSize="20" Width="180" MaxLength="15"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="2">
                             <TextBlock Text="AMA #"  FontSize="25"/>
-                            <TextBox Name="txtAMANumber"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
+                            <TextBox Text="{Binding SelectedEntry.AMACardNumber}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="3">
                             <TextBlock Text="Expiration:" FontSize="25"/>
-                            <TextBox Name="txtExpiration" FontSize="20" Width="Auto" MaxLength="7"/>
+                            <TextBox Text="{Binding SelectedEntry.Expiration}" FontSize="20" Width="Auto" MaxLength="7"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,15,0,0" Grid.Column="4">
@@ -154,22 +151,22 @@
 
                         <StackPanel>
                             <TextBlock Text="Address" FontSize="25"/>
-                            <TextBox Name="txtAddress" FontSize="20" Width="280" MaxLength="25" />
+                            <TextBox Text="{Binding SelectedEntry.Address}" FontSize="20" Width="280" MaxLength="25" />
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="1">
                             <TextBlock Text="City" FontSize="25"/>
-                            <TextBox Name="txtCity" FontSize="20" Width="180" MaxLength="15"/>
+                            <TextBox Text="{Binding SelectedEntry.City}" FontSize="20" Width="180" MaxLength="15"/>
                         </StackPanel>
 
                         <StackPanel  Margin="30,0,0,0" Grid.Column="2">
                             <TextBlock Text="State" FontSize="25"/>
-                            <TextBox Name="txtState" FontSize="20" Width="Auto" MaxLength="2"/>
+                            <TextBox Text="{Binding SelectedEntry.State}" FontSize="20" Width="Auto" MaxLength="2"/>
                         </StackPanel>
 
                         <StackPanel  Margin="30,0,0,0" Grid.Column="3">
                             <TextBlock Text="Zipcode" FontSize="25"/>
-                            <TextBox Name="txtZipcode"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="5" />
+                            <TextBox Text="{Binding SelectedEntry.Zipcode}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="5" />
                         </StackPanel>
                     </Grid>
 
@@ -182,17 +179,17 @@
 
                         <StackPanel>
                             <TextBlock Text="Phone #" FontSize="25"/>
-                            <TextBox Name="txtPhoneNumber" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
+                            <TextBox Text="{Binding SelectedEntry.Phone}" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="1">
                             <TextBlock Text="Email" FontSize="25"/>
-                            <TextBox Name="txtEmail" FontSize="20" Width="300"/>
+                            <TextBox Text="{Binding SelectedEntry.Email}" FontSize="20" Width="300"/>
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="2">
                             <TextBlock FontSize="30" Text="Rider Number" FontWeight="UltraBold"/>
-                            <TextBox FontSize="20" Name="txtRideNumber" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
+                            <TextBox FontSize="20" Text="{Binding SelectedEntry.RiderNumber}" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
 
@@ -216,12 +213,12 @@
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="2">
                             <TextBlock Text="CC" FontSize="25"/>
-                            <TextBox Name="txtCC" FontSize="20" Width="60" MaxLength="4" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" />
+                            <TextBox Text="{Binding SelectedEntry.CC}" FontSize="20" Width="60" MaxLength="4" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" />
                         </StackPanel>
 
                         <StackPanel Margin="30,0,0,0" Grid.Column="3">
                             <TextBlock Text="Year" FontSize="25"/>
-                            <TextBox Name="txtYear" FontSize="20" Width="60" MaxLength="4" />
+                            <TextBox Text="{Binding SelectedEntry.Year}" FontSize="20" Width="60" MaxLength="4" />
                         </StackPanel>
                     </Grid>
 
@@ -230,7 +227,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Grid.Column="3">
                                     <TextBlock Text="Dabbers Amount:" FontSize="30" FontWeight="Bold"/>
-                                    <TextBox Name="txtAmount" FontSize="20" PreviewTextInput="OnlyAllowCurrency_PreviewTextInput"/>
+                                    <TextBox Text="{Binding SelectedEntry.PaidAmount}" FontSize="20" PreviewTextInput="OnlyAllowCurrency_PreviewTextInput"/>
                                 </StackPanel>
 
                                 <TextBlock Margin="20,5,0,0" Name="txtTotalCumulativePayment" FontSize="25" FontWeight="Light"/>
@@ -267,10 +264,12 @@
                                     </ComboBox>
                                 </StackPanel>
                                 <TextBlock Text="# BBQ" FontSize="25" FontWeight="SemiBold"/>
-                                <TextBox Margin="10,-15,0,0" Name="txtNumBarbecue" FontSize="25" Width="25" MaxLength="1" PreviewTextInput="TxtNumBarbecue_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
+                                <TextBox Margin="10,-15,0,0" Text="{Binding SelectedEntry.Barbecue}" FontSize="25" Width="25" MaxLength="1" PreviewTextInput="TxtNumBarbecue_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
                                 <TextBlock Margin="10,-15,0,0" Name="txtNumRemainingBarbecue" FontWeight="Light" Width="Auto" FontSize="25" VerticalAlignment="Center" />
                                 <TextBlock Margin="10,0,0,0" Text="# Shirts" FontWeight="SemiBold" FontSize="25"/>
-                                <TextBox Margin="10,-15,0,0" FontSize="20" Name="txtNumShirts" Width="25" MaxLength="1" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" DataContext="3" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
+                                <TextBox Margin="10,-15,0,0" FontSize="20" Text="{Binding SelectedEntry.TShirt}" Width="25" MaxLength="1" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
+                                <!--PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput"-->
+                                <!--TextChanged="UpdatePaidAmount"-->
 
                                
                                 <TextBlock FontWeight="UltraBold" Margin="20,0,0,0" Text="Total Payment" FontSize="30"  />

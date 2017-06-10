@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>Notifiable Property</Title>
+    <Author>Akash</Author>
+    <Shortcut>nprop</Shortcut>
+    <Description>Property With in Built Property Changed method implementation.</Description>
+    <SnippetTypes>
+      <SnippetType>SurroundsWith</SnippetType>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>Type</ID>
+        <Default>string</Default>
+      </Literal>
+      <Literal>
+        <ID>Property</ID>
+        <Default>PlaceHolder</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="CSharp">
+      <![CDATA[private $Type$ _$Property$;
+        public $Type$ $Property$
+        {
+            get { return _$Property$; }
+            set { SetField(ref $Property$, value); }
+        }]]>
+    </Code>
+  </Snippet>
+</CodeSnippet>

@@ -57,7 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\FilePathToFileNameConverter.cs" />
+    <Compile Include="Converter\StringToVisibilityConverter.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Notifiable.cs" />
     <Compile Include="Views\CardSwipeView.xaml.cs">
       <DependentUpon>CardSwipeView.xaml</DependentUpon>
     </Compile>

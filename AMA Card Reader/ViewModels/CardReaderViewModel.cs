@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace AMA_Card_Reader.ViewModels
 {
-    public class CardReaderViewModel : INotifyPropertyChanged
+    public class CardReaderViewModel : Notifiable
     {
         private ObservableCollection<Vehicle> _vehicles = new ObservableCollection<Vehicle>();
         public ObservableCollection<Vehicle> Vehicles
@@ -22,27 +22,18 @@ namespace AMA_Card_Reader.ViewModels
             set { SetField(ref this._entries, value); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        private string _filePath = string.Empty;
+        public string FilePath
         {
-            InternalPropertyChanged(propertyName);
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get { return _filePath; }
+            set { SetField(ref this._filePath, value); }
         }
 
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        private AMACardEntry _selectedEntry = null;
+        public AMACardEntry SelectedEntry
         {
-            if (EqualityComparer<T>.Default.Equals(field, value))
-                return false;
-
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
-
-        protected virtual void InternalPropertyChanged(string property)
-        {
+            get { return _selectedEntry; }
+            set { SetField(ref this._selectedEntry, value); }
         }
     }
 }

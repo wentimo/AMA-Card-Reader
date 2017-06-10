@@ -1,36 +1,171 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 namespace AMA_Card_Reader.Models
 {
-    public class AMACardEntry
+    public class AMACardEntry : Notifiable
     {
         public string Name => $"{Firstname}, {Lastname}";
 
-        public int RowNumber { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zipcode { get; set; }
-        public string AMACardNumber { get; set; }
-        public string Expiration { get; set; }
-        public string RideType { get; set; }
-        public string RiderNumber { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public string CC { get; set; }
-        public string Year { get; set; }
-        public string Day1 { get; set; }
-        public string Day2 { get; set; }
-        public string Barbecue { get; set; }
-        public string Camping { get; set; }
-        public string TShirt { get; set; }
-        public string PaidAmount { get; set; }
-        public string MannerOfPayment { get; set; }
-        public string AMAPaidAmount { get; set; }
+        private int rowNumber;
+        public int RowNumber
+        {
+            get { return rowNumber; }
+            set { SetField(ref rowNumber, value); }
+        }
+
+        private string firstName;
+        public string Firstname
+        {
+            get { return firstName; }
+            set { SetField(ref firstName, value); }
+        }
+
+        private string lastName;
+        public string Lastname
+        {
+            get { return lastName; }
+            set { SetField(ref lastName, value); }
+        }
+
+        private string address;
+        public string Address
+        {
+            get { return address; }
+            set { SetField(ref address, value); }
+        }
+
+        private string city;
+        public string City
+        {
+            get { return city; }
+            set { SetField(ref city, value); }
+        }
+
+        private string state;
+        public string State
+        {
+            get { return state; }
+            set { SetField(ref state, value); }
+        }
+
+        private string zipCode;
+        public string Zipcode
+        {
+            get { return zipCode; }
+            set { SetField(ref zipCode, value); }
+        }
+
+        private string amaCardNumber;
+        public string AMACardNumber
+        {
+            get { return amaCardNumber; }
+            set { SetField(ref amaCardNumber, value); }
+        }
+
+        private string expiration;
+        public string Expiration
+        {
+            get { return expiration; }
+            set { SetField(ref expiration, value); }
+        }
+
+        private string ridetype;
+        public string RideType
+        {
+            get { return ridetype; }
+            set { SetField(ref ridetype, value); }
+        }
+        private string ridernumber;
+		public string RiderNumber
+        {
+            get { return ridernumber; }
+            set { SetField(ref ridernumber, value); }
+        }
+        private string phone;
+        public string Phone
+        {
+            get { return phone; }
+            set { SetField(ref phone, value); }
+        }
+        private string email;
+        public string Email
+        {
+            get { return email; }
+            set { SetField(ref email, value); }
+        }
+        private string make;
+        public string Make
+        {
+            get { return make; }
+            set { SetField(ref make, value); }
+        }
+        private string model;
+        public string Model
+        {
+            get { return model; }
+            set { SetField(ref model, value); }
+        }
+        private string cc;
+        public string CC
+        {
+            get { return cc; }
+            set { SetField(ref cc, value); }
+        }
+        private string year;
+        public string Year
+        {
+            get { return year; }
+            set { SetField(ref year, value); }
+        }
+        private string day1;
+        public string Day1
+        {
+            get { return day1; }
+            set { SetField(ref day1, value); }
+        }
+        private string day2;
+        public string Day2
+        {
+            get { return day2; }
+            set { SetField(ref day2, value); }
+        }
+        private string barbecue;
+        public string Barbecue
+        {
+            get { return barbecue; }
+            set { SetField(ref barbecue, value); }
+        }
+        private string camping;
+        public string Camping
+        {
+            get { return camping; }
+            set { SetField(ref camping, value); }
+        }
+        private string tshirt;
+        public string TShirt
+        {
+            get { return tshirt; }
+            set { SetField(ref tshirt, value); }
+        }
+        private string paidamount;
+        public string PaidAmount
+        {
+            get { return paidamount; }
+            set { SetField(ref paidamount, value); }
+        }
+        private string mannerofpayment;
+        public string MannerOfPayment
+        {
+            get { return mannerofpayment; }
+            set { SetField(ref mannerofpayment, value); }
+        }
+        private string amapaidamount;
+        public string AMAPaidAmount
+        {
+            get { return amapaidamount; }
+            set { SetField(ref amapaidamount, value); }
+        }
 
         public static AMACardEntry ParseEntryFromCardData(string cardData, int rowNumber)
         {

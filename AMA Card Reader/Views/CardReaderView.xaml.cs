@@ -14,7 +14,7 @@ namespace AMA_Card_Reader
 {
     public partial class CardReaderView : Window
     {
-        private string FilePath;
+        //private string vm.FilePath;
         private bool EditMode;
         private CardReaderViewModel vm;
 
@@ -24,7 +24,6 @@ namespace AMA_Card_Reader
             vm = this.DataContext as CardReaderViewModel;
 
             var json = File.ReadAllText("Data/makemodels.json");
-
             var listOfVehicles = JsonConvert.DeserializeObject<VehicleList>(json);
 
             foreach (var vehicle in listOfVehicles.Vehicles)
@@ -34,10 +33,19 @@ namespace AMA_Card_Reader
 
             cbMake.Items.Refresh();
             cbModels.Items.Refresh();
+
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                vm.FilePath = args[1];
+                ReadFile();
+            }
         }
 
         private AMACardEntry GetEntryFromUIElements()
         {
+            return vm.SelectedEntry;
+            /*
             try
             {
                 var entry = new AMACardEntry();
@@ -73,6 +81,7 @@ namespace AMA_Card_Reader
                 var bp = Ex.Message;
                 return null;
             }
+            //*/
         }
 
         private void SetUIElementsToCardData(AMACardEntry entry)
@@ -80,6 +89,8 @@ namespace AMA_Card_Reader
             ClearUIScreen(false);
             if (entry != null)
             {
+                vm.SelectedEntry = entry;
+                /*
                 txtFirstName.Text = entry.Firstname;
                 txtLastName.Text = entry.Lastname;
                 txtAddress.Text = entry.Address;
@@ -97,6 +108,7 @@ namespace AMA_Card_Reader
                 txtNumBarbecue.Text = entry.Barbecue;
                 txtNumShirts.Text = entry.TShirt;
                 txtAMAAmount.Text = entry.AMAPaidAmount;
+                //*/
 
                 double value = 0;
                 if (Double.TryParse(entry.PaidAmount, out double dabbersPaid))
@@ -186,23 +198,7 @@ namespace AMA_Card_Reader
             }
 
             EditMode = false;
-            txtFirstName.Text = string.Empty;
-            txtLastName.Text = string.Empty;
-            txtAddress.Text = string.Empty;
-            txtCity.Text = string.Empty;
-            txtState.Text = string.Empty;
-            txtZipcode.Text = string.Empty;
-            txtAMANumber.Text = string.Empty;
-            txtExpiration.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtPhoneNumber.Text = string.Empty;
-            txtYear.Text = string.Empty;
-            txtAmount.Text = string.Empty;
-            txtCC.Text = string.Empty;
             txtAMAAmount.Text = string.Empty;
-            txtNumShirts.Text = string.Empty;
-            txtNumBarbecue.Text = string.Empty;
-            txtRideNumber.Text = string.Empty;
             rbAdventure.IsChecked = false;
             rbDualSport.IsChecked = false;
             rbNone.IsChecked = false;
@@ -214,17 +210,18 @@ namespace AMA_Card_Reader
             cbMake.SelectedIndex = -1;
             cbModels.SelectedIndex = -1;
             cbPaymentMethod.SelectedIndex = -1;
+
             UpdateEntryStatistics();
         }
 
         private void RewriteCSVFile()
         {
-            File.Delete(FilePath);
+            File.Delete(vm.FilePath);
             bool first = true;
             foreach (var entryObj in vm.Entries)
             {
                 var csvRow = entryObj.ToCSVRow(!first);
-                File.AppendAllText(FilePath, csvRow);
+                File.AppendAllText(vm.FilePath, csvRow);
                 first = false;
             }
         }
@@ -234,7 +231,7 @@ namespace AMA_Card_Reader
             ClearUIScreen();
             vm.Entries.Clear();
 
-            var data = File.ReadAllText(FilePath);
+            var data = File.ReadAllText(vm.FilePath);
             if (!string.IsNullOrWhiteSpace(data))
             {
                 var listOfEntries = data.Split('\r');
@@ -259,7 +256,7 @@ namespace AMA_Card_Reader
                 if (error) MessageBox.Show("There was an error while trying to read this CSV File. Some rows may not have loaded.");
             }
 
-            outerGrid.Visibility = Visibility.Visible;
+            //outerGrid.Visibility = Visibility.Visible;
         }
 
         private bool OpenFile()
@@ -268,8 +265,8 @@ namespace AMA_Card_Reader
 
             if (openfile.ShowDialog() == true)
             {
-                FilePath = openfile.FileName;
-                txtFileName.Text = Path.GetFileName(FilePath);
+                vm.FilePath = openfile.FileName;
+                //txtFileName.Text = Path.GetFileName(vm.FilePath);
                 return true;
             }
             return false;
@@ -286,9 +283,9 @@ namespace AMA_Card_Reader
 
             if (saveFile.ShowDialog() == true)
             {
-                FilePath = saveFile.FileName;
-                outerGrid.Visibility = Visibility.Visible;
-                if (!File.Exists(FilePath)) File.Create(FilePath);
+                vm.FilePath = saveFile.FileName;
+                //outerGrid.Visibility = Visibility.Visible;
+                if (!File.Exists(vm.FilePath)) File.Create(vm.FilePath);
             }
         }
 
@@ -327,7 +324,8 @@ namespace AMA_Card_Reader
 
         private void BtnAddEntry_Click(object sender, RoutedEventArgs e)
         {
-            if (txtFirstName.Text.Length < 1 || txtAMANumber.Text.Length != 7)
+            //*
+            if (vm.SelectedEntry.Firstname.Length < 1 || vm.SelectedEntry.AMACardNumber.Length != 7)
             {
                 MessageBox.Show("One of the following requirements were not met:\r\r1.Name must be at least 2 characters long\r2.AMA Must be a 7 digits long");
             }
@@ -335,7 +333,7 @@ namespace AMA_Card_Reader
             {
                 var entry = GetEntryFromUIElements();
                 var csvRow = entry.ToCSVRow(vm.Entries.Count > 0);
-                File.AppendAllText(FilePath, csvRow);
+                File.AppendAllText(vm.FilePath, csvRow);
 
                 vm.Entries.Add(entry);
                 ClearUIScreen();
@@ -346,7 +344,7 @@ namespace AMA_Card_Reader
             BtnUpdate.Visibility = Visibility.Collapsed;
 
             ClearUIScreen();
-
+            //*/
         }
 
         private void BtnClear_Click(object sender, RoutedEventArgs e)
@@ -516,16 +514,19 @@ namespace AMA_Card_Reader
             {
                 amount += 10;
             }
-            if (txtNumShirts.Text.Length > 0 && int.TryParse(txtNumShirts.Text, out int numShirts))
+            if (vm.SelectedEntry != null)
             {
-                amount += (numShirts * 15);
-            }
-            if (txtNumBarbecue.Text.Length > 0 && int.TryParse(txtNumBarbecue.Text, out int numBBQ))
-            {
-                amount += (numBBQ * 10);
+                if (vm.SelectedEntry.TShirt.Length > 0 && int.TryParse(vm.SelectedEntry.TShirt, out int numShirts))
+                {
+                    amount += (numShirts * 15);
+                }
+                if (vm.SelectedEntry.Barbecue.Length > 0 && int.TryParse(vm.SelectedEntry.Barbecue, out int numBBQ))
+                {
+                    amount += (numBBQ * 10);
+                }
             }
 
-            txtAmount.Text = amount > 0 ? amount.ToString() : "";
+            //txtAmount.Text = amount > 0 ? amount.ToString() : "";
             SetTotalPaid();
 
         }
@@ -550,23 +551,28 @@ namespace AMA_Card_Reader
 
         private void SetTotalPaid()
         {
+            //*
             double value = 0;
-            if (Double.TryParse(txtAmount.Text, out double dabbersPaid))
-            {
-                if (Double.TryParse(txtAMAAmount.Text, out double amaPaid))
+            if (vm.SelectedEntry != null)
+            { 
+                if (Double.TryParse(vm.SelectedEntry.PaidAmount, out double dabbersPaid))
                 {
-                    value = dabbersPaid + amaPaid;
+                    if (Double.TryParse(txtAMAAmount.Text, out double amaPaid))
+                    {
+                        value = dabbersPaid + amaPaid;
+                    }
+                    else
+                    {
+                        value = dabbersPaid;
+                    }
                 }
-                else
+                else if (Double.TryParse(txtAMAAmount.Text, out double amaPaid))
                 {
-                    value = dabbersPaid;
+                    value = amaPaid;
                 }
-            }
-            else if (Double.TryParse(txtAMAAmount.Text, out double amaPaid))
-            {
-                value = amaPaid;
             }
             txtCombinedPayment.Text = $"${value.ToString()}";
+            //*/
         }
 
         private void TxtNumBarbecue_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
