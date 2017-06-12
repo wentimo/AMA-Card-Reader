@@ -382,6 +382,7 @@ namespace AMA_Card_Reader
             EditMode = false;
             BtnUpdate.Visibility = Visibility.Collapsed;
 
+            /*
             var index = lvAMAEntries.SelectedIndex;
             var updatedEntry = GetEntryFromUIElements();
             var item = lvAMAEntries.SelectedItem as AMACardEntry;
@@ -389,10 +390,10 @@ namespace AMA_Card_Reader
 
             updatedEntry.RowNumber = rowNumber;
             vm.Entries[rowNumber - 1] = updatedEntry;
-
+            //*/
             RewriteCSVFile();
-            SetUIElementsToCardData(updatedEntry);
-            lvAMAEntries.SelectedIndex = index;
+            //SetUIElementsToCardData(updatedEntry);
+            //lvAMAEntries.SelectedIndex = index;
         }
 
         private void LvAMAEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -590,8 +591,9 @@ namespace AMA_Card_Reader
             }
 
             var numBBQ = vm.Entries.Where(x => !string.IsNullOrWhiteSpace(x.Barbecue)).Select(x => Convert.ToInt32(x.Barbecue)).Sum();
+            var oldValue = int.Parse((sender as TextBox).Text);
 
-            if (numBBQ + value > 150)
+            if (numBBQ + (value - oldValue) > 150)
             {
                 MessageBox.Show($"There are {numBBQ} BBQ units sold already. There is a limit of {150 - numBBQ} remaining.");
                 e.Handled = true;

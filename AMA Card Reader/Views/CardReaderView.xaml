@@ -45,8 +45,8 @@
 
         <Grid><!--Visibility="{Binding FilePath, Converter={StaticResource StringToVisibilityConverter}}">-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2.45*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Name="gridLeftSide" Grid.Column="0" Margin="10">
@@ -56,7 +56,6 @@
                 </Grid.RowDefinitions>
 
                 <Grid Name="gridFileName" Grid.Row="0">
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -111,7 +110,7 @@
                 </ListView>
             </Grid>
 
-            <Grid Name="gridRightSide" Grid.Column="1" Margin="0,50,0,0" Width="Auto">
+            <Grid Name="gridRightSide" Grid.Column="1" Margin="0,50,0,0" Width="Auto" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
