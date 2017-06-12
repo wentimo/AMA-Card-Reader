@@ -6,16 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace AMA_Card_Reader.Validator
+namespace AMA_Card_Reader.Validation
 {
-    public class OneThroughThreeValidationRule : ValidationRule
+    public class NumberValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (int.TryParse(value.ToString(), out int i) && i <= 3)
+            if (int.TryParse((string)value, out int number))
                 return new ValidationResult(true, null);
-
-            return new ValidationResult(false, "Value must be a number between 1 and 3.");
+            else
+                return new ValidationResult(false, "Value must be a number.");
         }
     }
 }

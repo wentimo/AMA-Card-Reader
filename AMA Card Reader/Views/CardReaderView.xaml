@@ -4,16 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:AMA_Card_Reader.ViewModels"
-        xmlns:validator="clr-namespace:AMA_Card_Reader.Validator"
+        xmlns:converter="clr-namespace:AMA_Card_Reader.Converter"
+        xmlns:validation="clr-namespace:AMA_Card_Reader.Validation"
         mc:Ignorable="d"
         Title="AMA Card Reader" 
-        Height="800"
+        Height="920"
         Width="1400"
         Background="LightGray">
 
     <Window.DataContext>
         <viewmodels:CardReaderViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontWeight="Bold" FontSize="25"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <DockPanel>
         <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
@@ -102,106 +117,104 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Name="dataGrid" FocusManager.IsFocusScope="True" GotFocus="Grid_GotFocus">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel >
-                            <TextBlock Text="First Name" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Firstname}" FontSize="20" Width="160" MaxLength="13"/>
-                        </StackPanel>
-
-                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
-                            <TextBlock Text="Last Name" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Lastname}" FontSize="20" Width="180" MaxLength="15"/>
-                        </StackPanel>
-
-                        <StackPanel Margin="30,0,0,0" Grid.Column="2">
-                            <TextBlock Text="AMA #"  FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.AMACardNumber}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
-                        </StackPanel>
-
-                        <StackPanel Margin="30,0,0,0" Grid.Column="3">
-                            <TextBlock Text="Expiration:" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Expiration}" FontSize="20" Width="Auto" MaxLength="7"/>
-                        </StackPanel>
-
-                        <StackPanel Margin="30,15,0,0" Grid.Column="4">
-                            <Viewbox Height="25">
-                                <RadioButton Name="rbDualSport"  GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport"/>
-                            </Viewbox>
-                            <Viewbox Margin="0,5,0,0" Height="25">
-                                <RadioButton Name="rbAdventure" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Adventure"/>
-                            </Viewbox>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Margin="0,10,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
+                <StackPanel Name="dataGrid" GotFocus="Grid_GotFocus">
+                    <GroupBox Header="Demographics">
                         <StackPanel>
-                            <TextBlock Text="Address" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Address}" FontSize="20" Width="280" MaxLength="25" />
+                            <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <TextBlock Text="First Name" FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.Firstname}" FontSize="20" Width="160" MaxLength="13"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                                        <TextBlock Text="Last Name" FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.Lastname}" FontSize="20" Width="180" MaxLength="15"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                                        <TextBlock Text="AMA #"  FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.AMACardNumber}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="30,0,0,0" Grid.Column="3">
+                                        <TextBlock Text="Expiration:" FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.Expiration}" FontSize="20" Width="Auto" MaxLength="7"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="30,15,0,0" Grid.Column="4">
+                                        <Viewbox Height="25">
+                                            <RadioButton Name="rbDualSport"  GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport"/>
+                                        </Viewbox>
+                                        <Viewbox Margin="0,5,0,0" Height="25">
+                                            <RadioButton Name="rbAdventure" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Adventure"/>
+                                        </Viewbox>
+                                    </StackPanel>
+                                </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,10">
+                                    <StackPanel>
+                                        <TextBlock Text="Address" FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.Address}" FontSize="20" Width="280" MaxLength="25" />
+                                    </StackPanel>
+
+                                    <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                                        <TextBlock Text="City" FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.City}" FontSize="20" Width="180" MaxLength="15"/>
+                                    </StackPanel>
+
+                                    <StackPanel  Margin="30,0,0,0" Grid.Column="2">
+                                        <TextBlock Text="State" FontSize="25"/>
+                                        <TextBox Text="{Binding SelectedEntry.State}" FontSize="20" Width="Auto" MaxLength="2"/>
+                                    </StackPanel>
+
+                                    <StackPanel  Margin="30,0,0,0" Grid.Column="3">
+                                        <TextBlock Text="Zipcode" FontSize="25"/>
+                                    <TextBox FontSize="20" Width="Auto" MaxLength="5">
+                                        <!--Text="{Binding SelectedEntry.Zipcode}"  -->
+                                        <TextBox.Text>
+                                            <Binding Path="SelectedEntry.Zipcode" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                                <Binding.ValidationRules>
+                                                    <validation:NumberValidationRule/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                        
+                                        <Validation.ErrorTemplate>
+                                            <ControlTemplate>
+                                                <DockPanel>
+                                                    <Border BorderBrush="Red" BorderThickness="1">
+                                                        <AdornedElementPlaceholder x:Name="controlWithError"/>
+                                                    </Border>
+                                                    <TextBlock Foreground="Red" FontSize="20" FontFamily="Segoe UI" Margin="3,0,0,0">!</TextBlock>
+                                                </DockPanel>
+                                            </ControlTemplate>
+                                        </Validation.ErrorTemplate>
+                                    </TextBox>
+                                    <!--PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" -->
+                                    </StackPanel>
+                                </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,10">
+                                <StackPanel>
+                                    <TextBlock Text="Phone #" FontSize="25"/>
+                                    <TextBox Text="{Binding SelectedEntry.Phone}" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
+                                </StackPanel>
+
+                                <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                                    <TextBlock Text="Email" FontSize="25"/>
+                                    <TextBox Text="{Binding SelectedEntry.Email}" FontSize="20" Width="300"/>
+                                </StackPanel>
+
+                                <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                                    <TextBlock FontSize="30" Text="Rider Number" FontWeight="UltraBold"/>
+                                    <TextBox FontSize="20" Text="{Binding SelectedEntry.RiderNumber}" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
+                    </GroupBox>
 
-                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
-                            <TextBlock Text="City" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.City}" FontSize="20" Width="180" MaxLength="15"/>
-                        </StackPanel>
-
-                        <StackPanel  Margin="30,0,0,0" Grid.Column="2">
-                            <TextBlock Text="State" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.State}" FontSize="20" Width="Auto" MaxLength="2"/>
-                        </StackPanel>
-
-                        <StackPanel  Margin="30,0,0,0" Grid.Column="3">
-                            <TextBlock Text="Zipcode" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Zipcode}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="5" />
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Margin="0,20,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel>
-                            <TextBlock Text="Phone #" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Phone}" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
-                        </StackPanel>
-
-                        <StackPanel Margin="30,0,0,0" Grid.Column="1">
-                            <TextBlock Text="Email" FontSize="25"/>
-                            <TextBox Text="{Binding SelectedEntry.Email}" FontSize="20" Width="300"/>
-                        </StackPanel>
-
-                        <StackPanel Margin="30,0,0,0" Grid.Column="2">
-                            <TextBlock FontSize="30" Text="Rider Number" FontWeight="UltraBold"/>
-                            <TextBox FontSize="20" Text="{Binding SelectedEntry.RiderNumber}" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Margin="0,20,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
+                    <GroupBox Header="Vehicle Information" Margin="0,10">
+                        <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <TextBlock Text="Make" FontSize="25"/>
                             <ComboBox Name="cbMake" FontSize="20" IsEditable="True" Width="200" ItemsSource="{Binding Vehicles}" DisplayMemberPath="Name"/>
@@ -221,8 +234,9 @@
                             <TextBlock Text="Year" FontSize="25"/>
                             <TextBox Text="{Binding SelectedEntry.Year}" FontSize="20" Width="60" MaxLength="4" />
                         </StackPanel>
-                    </Grid>
-
+                    </StackPanel>
+                    </GroupBox>
+                    
                     <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
                         <StackPanel Margin="5,0,0,0">
                             <StackPanel Orientation="Horizontal">
