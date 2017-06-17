@@ -43,177 +43,163 @@
             </MenuItem>
         </Menu>
 
-        <Grid><!--Visibility="{Binding FilePath, Converter={StaticResource StringToVisibilityConverter}}">-->
+        <Grid>
+            <!--Visibility="{Binding FilePath, Converter={StaticResource StringToVisibilityConverter}}">-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2.45*"/>
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
 
-            <Grid Name="gridLeftSide" Grid.Column="0" Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-
-                <Grid Name="gridFileName" Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Margin="0,10,10,10" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="Open File: " FontSize="24"/>
-                        <TextBlock Text="{Binding FilePath, Converter={StaticResource FilePathToFileNameConverter}}" FontSize="24"/>
-                    </StackPanel>
-                </Grid>
-
-                <ListView Name="lvAMAEntries" 
-                          ItemsSource="{Binding Entries}"
-                          Grid.Row="1"
-                          TextElement.FontSize="22"
-                          SelectedItem="{Binding SelectedEntry}"
+            <StackPanel Margin="10,10,10,10" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Open File: " FontSize="24"/>
+                <TextBlock Text="{Binding FilePath, Converter={StaticResource FilePathToFileNameConverter}}" FontSize="24"/>
+            </StackPanel>
+            <ListView Name="lvAMAEntries" 
+                ItemsSource="{Binding Entries}"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                TextElement.FontSize="22"
+                SelectedItem="{Binding SelectedEntry}"
                           
-                          SelectionChanged="LvAMAEntries_SelectionChanged"
-                          ScrollViewer.CanContentScroll="True" 
-                          ScrollViewer.VerticalScrollBarVisibility="Auto">
+                SelectionChanged="LvAMAEntries_SelectionChanged"
+                ScrollViewer.CanContentScroll="True" 
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
 
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Row #" Width="60">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock TextAlignment="Center" Text="{Binding RowNumber}" FontSize="20" Foreground="Black"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Name" Width="200">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name}" FontSize="20" Foreground="Black"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="AMA #" Width="100">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding AMACardNumber}" FontSize="20" Foreground="Black"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-            </Grid>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Row #" Width="60">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Center" Text="{Binding RowNumber}" FontSize="20" Foreground="Black"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Name" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" FontSize="20" Foreground="Black"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="AMA #" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding AMACardNumber}" FontSize="20" Foreground="Black"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
 
-            <Grid Name="gridRightSide" Grid.Column="1" Margin="0,50,0,0" Width="Auto" HorizontalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <StackPanel Name="dataGrid" GotFocus="Grid_GotFocus" Grid.Column="1" Grid.Row="1">
+                <GroupBox Header="Demographics">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <TextBlock Text="First Name" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.Firstname}" FontSize="20" Width="160" MaxLength="13"/>
+                            </StackPanel>
 
-                <StackPanel Name="dataGrid" GotFocus="Grid_GotFocus">
-                    <GroupBox Header="Demographics">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                    <StackPanel>
-                                        <TextBlock Text="First Name" FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.Firstname}" FontSize="20" Width="160" MaxLength="13"/>
-                                    </StackPanel>
+                            <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                                <TextBlock Text="Last Name" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.Lastname}" FontSize="20" Width="180" MaxLength="15"/>
+                            </StackPanel>
 
-                                    <StackPanel Margin="30,0,0,0" Grid.Column="1">
-                                        <TextBlock Text="Last Name" FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.Lastname}" FontSize="20" Width="180" MaxLength="15"/>
-                                    </StackPanel>
+                            <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                                <TextBlock Text="AMA #"  FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.AMACardNumber}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
+                            </StackPanel>
 
-                                    <StackPanel Margin="30,0,0,0" Grid.Column="2">
-                                        <TextBlock Text="AMA #"  FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.AMACardNumber}"  FontSize="20" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" Width="Auto" MaxLength="7"/>
-                                    </StackPanel>
+                            <StackPanel Margin="30,0,0,0" Grid.Column="3">
+                                <TextBlock Text="Expiration:" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.Expiration}" FontSize="20" Width="Auto" MaxLength="7"/>
+                            </StackPanel>
 
-                                    <StackPanel Margin="30,0,0,0" Grid.Column="3">
-                                        <TextBlock Text="Expiration:" FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.Expiration}" FontSize="20" Width="Auto" MaxLength="7"/>
-                                    </StackPanel>
-
-                                    <StackPanel Margin="30,15,0,0" Grid.Column="4">
-                                        <Viewbox Height="25">
-                                            <RadioButton Name="rbDualSport"  GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport"/>
-                                        </Viewbox>
-                                        <Viewbox Margin="0,5,0,0" Height="25">
-                                            <RadioButton Name="rbAdventure" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Adventure"/>
-                                        </Viewbox>
-                                    </StackPanel>
-                                </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0,10">
-                                    <StackPanel>
-                                        <TextBlock Text="Address" FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.Address}" FontSize="20" Width="280" MaxLength="25" />
-                                    </StackPanel>
-
-                                    <StackPanel Margin="30,0,0,0" Grid.Column="1">
-                                        <TextBlock Text="City" FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.City}" FontSize="20" Width="180" MaxLength="15"/>
-                                    </StackPanel>
-
-                                    <StackPanel  Margin="30,0,0,0" Grid.Column="2">
-                                        <TextBlock Text="State" FontSize="25"/>
-                                        <TextBox Text="{Binding SelectedEntry.State}" FontSize="20" Width="Auto" MaxLength="2"/>
-                                    </StackPanel>
-
-                                    <StackPanel  Margin="30,0,0,0" Grid.Column="3">
-                                        <TextBlock Text="Zipcode" FontSize="25"/>
-                                    <TextBox FontSize="20" Width="Auto" MaxLength="5">
-                                        <!--Text="{Binding SelectedEntry.Zipcode}"  -->
-                                        <TextBox.Text>
-                                            <Binding Path="SelectedEntry.Zipcode" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
-                                                <Binding.ValidationRules>
-                                                    <validation:NumberValidationRule/>
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                        
-                                        <Validation.ErrorTemplate>
-                                            <ControlTemplate>
-                                                <DockPanel>
-                                                    <Border BorderBrush="Red" BorderThickness="1">
-                                                        <AdornedElementPlaceholder x:Name="controlWithError"/>
-                                                    </Border>
-                                                    <TextBlock Foreground="Red" FontSize="20" FontFamily="Segoe UI" Margin="3,0,0,0">!</TextBlock>
-                                                </DockPanel>
-                                            </ControlTemplate>
-                                        </Validation.ErrorTemplate>
-                                    </TextBox>
-                                    <!--PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" -->
-                                    </StackPanel>
-                                </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0,10">
-                                <StackPanel>
-                                    <TextBlock Text="Phone #" FontSize="25"/>
-                                    <TextBox Text="{Binding SelectedEntry.Phone}" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
-                                </StackPanel>
-
-                                <StackPanel Margin="30,0,0,0" Grid.Column="1">
-                                    <TextBlock Text="Email" FontSize="25"/>
-                                    <TextBox Text="{Binding SelectedEntry.Email}" FontSize="20" Width="300"/>
-                                </StackPanel>
-
-                                <StackPanel Margin="30,0,0,0" Grid.Column="2">
-                                    <TextBlock FontSize="30" Text="Rider Number" FontWeight="UltraBold"/>
-                                    <TextBox FontSize="20" Text="{Binding SelectedEntry.RiderNumber}" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
-                                </StackPanel>
+                            <StackPanel Margin="30,15,0,0" Grid.Column="4">
+                                <Viewbox Height="25">
+                                    <RadioButton Name="rbDualSport"  GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport"/>
+                                </Viewbox>
+                                <Viewbox Margin="0,5,0,0" Height="25">
+                                    <RadioButton Name="rbAdventure" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Adventure"/>
+                                </Viewbox>
                             </StackPanel>
                         </StackPanel>
-                    </GroupBox>
 
-                    <GroupBox Header="Vehicle Information" Margin="0,10">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <StackPanel>
+                                <TextBlock Text="Address" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.Address}" FontSize="20" Width="280" MaxLength="25" />
+                            </StackPanel>
+
+                            <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                                <TextBlock Text="City" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.City}" FontSize="20" Width="180" MaxLength="15"/>
+                            </StackPanel>
+
+                            <StackPanel  Margin="30,0,0,0" Grid.Column="2">
+                                <TextBlock Text="State" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.State}" FontSize="20" Width="Auto" MaxLength="2"/>
+                            </StackPanel>
+
+                            <StackPanel  Margin="30,0,0,0" Grid.Column="3">
+                                <TextBlock Text="Zipcode" FontSize="25"/>
+                                <TextBox FontSize="20" Width="Auto" MaxLength="5">
+                                    <!--Text="{Binding SelectedEntry.Zipcode}"  -->
+                                    <TextBox.Text>
+                                        <Binding Path="SelectedEntry.Zipcode" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <validation:NumberValidationRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <DockPanel>
+                                                <Border BorderBrush="Red" BorderThickness="1">
+                                                    <AdornedElementPlaceholder x:Name="controlWithError"/>
+                                                </Border>
+                                                <TextBlock Foreground="Red" FontSize="20" FontFamily="Segoe UI" Margin="3,0,0,0">!</TextBlock>
+                                            </DockPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
+                                <!--PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" -->
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10">
+                            <StackPanel>
+                                <TextBlock Text="Phone #" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.Phone}" FontSize="20" Width="120" MaxLength="10" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="30,0,0,0" Grid.Column="1">
+                                <TextBlock Text="Email" FontSize="25"/>
+                                <TextBox Text="{Binding SelectedEntry.Email}" FontSize="20" Width="300"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="30,0,0,0" Grid.Column="2">
+                                <TextBlock FontSize="30" Text="Rider Number" FontWeight="UltraBold"/>
+                                <TextBox FontSize="20" Text="{Binding SelectedEntry.RiderNumber}" PreviewTextInput="OnlyAllowNumbers_PreviewTextInput" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Vehicle Information" Margin="0,10">
+                    <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <TextBlock Text="Make" FontSize="25"/>
                             <ComboBox Name="cbMake" FontSize="20" IsEditable="True" Width="200" ItemsSource="{Binding Vehicles}" DisplayMemberPath="Name"/>
@@ -234,127 +220,116 @@
                             <TextBox Text="{Binding SelectedEntry.Year}" FontSize="20" Width="60" MaxLength="4" />
                         </StackPanel>
                     </StackPanel>
-                    </GroupBox>
-                    
-                    <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
-                        <StackPanel Margin="5,0,0,0">
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel Grid.Column="3">
-                                    <TextBlock Text="Dabbers Amount:" FontSize="30" FontWeight="Bold"/>
-                                    <TextBox Text="{Binding SelectedEntry.PaidAmount}" FontSize="20" PreviewTextInput="OnlyAllowCurrency_PreviewTextInput"/>
-                                </StackPanel>
+                </GroupBox>
 
-                                <TextBlock Margin="20,5,0,0" Name="txtTotalCumulativePayment" FontSize="25" FontWeight="Light"/>
-                                
-                                <TextBlock Margin="30,12,0,0" Text="Day 1" FontSize="25"/>
-                                <CheckBox  Margin="5,-5,0,0" Name="checkboxDay1" Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-
-                                <TextBlock Margin="30,12,0,0" Text="Day 2"  FontSize="25" />
-                                <CheckBox  Margin="5,-5,0,0" Name="checkboxDay2"  Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
-
-                                <TextBlock Margin="20,12,0,0" Text="Camping" FontSize="25"/>
-                                <CheckBox  Margin="5,-5,0,0" Name="checkboxCamping" Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
-                                    <CheckBox.LayoutTransform>
-                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                                    </CheckBox.LayoutTransform>
-                                </CheckBox>
+                <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
+                    <StackPanel Margin="5,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Dabbers Amount:" FontSize="30" FontWeight="Bold"/>
+                                <TextBox Text="{Binding SelectedEntry.PaidAmount}" FontSize="20" PreviewTextInput="OnlyAllowCurrency_PreviewTextInput"/>
                             </StackPanel>
 
-                            <StackPanel Margin="0,30,0,0" Orientation="Horizontal">
-                                <StackPanel Margin="0,-30,10,10">
-                                    <TextBlock Text="Pay Method:" FontWeight="Bold" FontSize="25"/>
-                                    <ComboBox Name="cbPaymentMethod" FontSize="20">
-                                        <ComboBoxItem>Cash</ComboBoxItem>
-                                        <ComboBoxItem>Check</ComboBoxItem>
-                                        <ComboBoxItem>Credit Card</ComboBoxItem>
-                                    </ComboBox>
-                                </StackPanel>
-                                <TextBlock Text="# BBQ" FontSize="25" FontWeight="SemiBold"/>
-                                <TextBox Margin="10,-15,0,0" Text="{Binding SelectedEntry.Barbecue}" FontSize="25" Width="25" MaxLength="1" PreviewTextInput="TxtNumBarbecue_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
-                                <TextBlock Margin="10,-15,0,0" Name="txtNumRemainingBarbecue" FontWeight="Light" Width="Auto" FontSize="25" VerticalAlignment="Center" />
-                                <TextBlock Margin="10,0,0,0" Text="# Shirts" FontWeight="SemiBold" FontSize="25"/>
-                                <TextBox Margin="10,-15,0,0" FontSize="20" Width="25" MaxLength="1" TextChanged="UpdatePaidAmount" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" VerticalAlignment="Center"/>
+                            <TextBlock Margin="20,5,0,0" Name="txtTotalCumulativePayment" FontSize="25" FontWeight="Light"/>
 
+                            <TextBlock Margin="30,12,0,0" Text="Day 1" FontSize="25"/>
+                            <CheckBox  Margin="5,-5,0,0" Name="checkboxDay1" Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
 
-                                <TextBlock FontWeight="UltraBold" Margin="20,0,0,0" Text="Total Payment" FontSize="30"  />
-                                <TextBlock Margin="10,-5,10,10" Padding="3" Width="75" Name="txtCombinedPayment" FontSize="30" Background="White" Foreground="Black"/>
-                            </StackPanel>
+                            <TextBlock Margin="30,12,0,0" Text="Day 2"  FontSize="25" />
+                            <CheckBox  Margin="5,-5,0,0" Name="checkboxDay2"  Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
+
+                            <TextBlock Margin="20,12,0,0" Text="Camping" FontSize="25"/>
+                            <CheckBox  Margin="5,-5,0,0" Name="checkboxCamping" Unchecked="UpdatePaidAmount" Checked="UpdatePaidAmount" VerticalAlignment="Center">
+                                <CheckBox.LayoutTransform>
+                                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                </CheckBox.LayoutTransform>
+                            </CheckBox>
                         </StackPanel>
-                    </Border>
 
-                    <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
-                        <Grid Margin="5,5,5,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel>
-                                <TextBlock Text="AMA Payment:" FontSize="25" FontWeight="Bold"/>
-                                <TextBox Name="txtAMAAmount" FontSize="20" IsEnabled="False"/>
+                        <StackPanel Margin="0,30,0,0" Orientation="Horizontal">
+                            <StackPanel Margin="0,-30,10,10">
+                                <TextBlock Text="Pay Method:" FontWeight="Bold" FontSize="25"/>
+                                <ComboBox Name="cbPaymentMethod" FontSize="20">
+                                    <ComboBoxItem>Cash</ComboBoxItem>
+                                    <ComboBoxItem>Check</ComboBoxItem>
+                                    <ComboBoxItem>Credit Card</ComboBoxItem>
+                                </ComboBox>
                             </StackPanel>
+                            <TextBlock Text="# BBQ" FontSize="25" FontWeight="SemiBold"/>
+                            <TextBox Margin="10,-15,0,0" Text="{Binding SelectedEntry.Barbecue}" FontSize="25" Width="25" MaxLength="1" PreviewTextInput="TxtNumBarbecue_PreviewTextInput" TextChanged="UpdatePaidAmount" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,-15,0,0" Name="txtNumRemainingBarbecue" FontWeight="Light" Width="Auto" FontSize="25" VerticalAlignment="Center" />
+                            <TextBlock Margin="10,0,0,0" Text="# Shirts" FontWeight="SemiBold" FontSize="25"/>
+                            <TextBox Margin="10,-15,0,0" FontSize="20" Width="25" MaxLength="1" TextChanged="UpdatePaidAmount" PreviewTextInput="OnlyAllow1ThroughN_PreviewTextInput" VerticalAlignment="Center"/>
 
-                            <StackPanel Margin="20,0,0,0" Grid.Column="1">
-                                <TextBlock Name="txtTotalAMACumulativePayment" FontSize="25" FontWeight="Light"/>
-                            </StackPanel>
 
-                            <StackPanel Margin="15,-5,0,0" Orientation="Horizontal"  Grid.Column="2">
-                                <TextBlock Margin="5,15,0,0" Text=" AMA Signup" FontSize="25" FontWeight="Bold"/>
-                                
-                                <Viewbox Height="25" Margin="10,13,0,0">
-                                    <RadioButton Name="rbNone" Checked="RbNone_Checked" GroupName="AMAOptions" FontSize="22" Content="None" Padding="0,-10,0,0"/>
-                                </Viewbox>
-                                <Viewbox Height="25" Margin="10,13,0,0">
-                                    <RadioButton Name="rbAnnual" Checked="RbAnnual_Checked" GroupName="AMAOptions" FontSize="22" Content="Annual" Padding="0,-10,0,0"/>
-                                </Viewbox>
-                                <Viewbox Height="25" Margin="10,13,0,0">
-                                    <RadioButton Name="rb1Day" Checked="Rb1Day_Checked"  GroupName="AMAOptions" FontSize="22" Content="1 Day" Padding="0,-10,0,0"/>
-                                </Viewbox>
-                            </StackPanel>
+                            <TextBlock FontWeight="UltraBold" Margin="20,0,0,0" Text="Total Payment" FontSize="30"  />
+                            <TextBlock Margin="10,-5,10,10" Padding="3" Width="75" Name="txtCombinedPayment" FontSize="30" Background="White" Foreground="Black"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
 
-                        </Grid>
-                    </Border>
-                </StackPanel>
-
-                <StackPanel Margin="0,30,0,0"  Grid.Row="1" Name="stkpnlButtonsList" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                    <Grid>
+                <Border BorderBrush="Black" BorderThickness="1" Margin="0,20,0,0">
+                    <Grid Margin="5,5,5,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button Margin="5" Background="Turquoise" Name="btnLoadData" Click="BtnScanData_Click" Focusable="false">
-                            <TextBlock Margin="5" FontSize="25" Text="Scan Card"/>
-                        </Button>
-                        <Button Margin="5" Background="Turquoise" Grid.Column="1" Name="BtnAddEntry" Click="BtnAddEntry_Click" Focusable="false">
-                            <TextBlock  Margin="5" FontSize="25" Text="Add Entry"/>
-                        </Button>
-                        <Button Margin="5" Background="Turquoise" Grid.Column="2" Name="BtnClear" Click="BtnClear_Click" Focusable="false" Visibility="Collapsed">
-                            <TextBlock  Margin="5" FontSize="25" Text="Clear"/>
-                        </Button>
-                        <Button Margin="5" Background="Turquoise" Grid.Column="3" Name="BtnDelete" Click="BtnDelete_Click" Focusable="false" Visibility="Collapsed">
-                            <TextBlock  Margin="5" FontSize="25" Text="Delete"/>
-                        </Button>
-                        <Button Margin="5" Background="Turquoise" Grid.Column="4" Name="BtnUpdate" Click="BtnUpdate_Click" Focusable="false" Visibility="Collapsed">
-                            <TextBlock  Margin="5" FontSize="25" Text="Update Row"/>
-                        </Button>
+                        <StackPanel>
+                            <TextBlock Text="AMA Payment:" FontSize="25" FontWeight="Bold"/>
+                            <TextBox Name="txtAMAAmount" FontSize="20" IsEnabled="False"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="20,0,0,0" Grid.Column="1">
+                            <TextBlock Name="txtTotalAMACumulativePayment" FontSize="25" FontWeight="Light"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="15,-5,0,0" Orientation="Horizontal"  Grid.Column="2">
+                            <TextBlock Margin="5,15,0,0" Text=" AMA Signup" FontSize="25" FontWeight="Bold"/>
+
+                            <Viewbox Height="25" Margin="10,13,0,0">
+                                <RadioButton Name="rbNone" Checked="RbNone_Checked" GroupName="AMAOptions" FontSize="22" Content="None" Padding="0,-10,0,0"/>
+                            </Viewbox>
+                            <Viewbox Height="25" Margin="10,13,0,0">
+                                <RadioButton Name="rbAnnual" Checked="RbAnnual_Checked" GroupName="AMAOptions" FontSize="22" Content="Annual" Padding="0,-10,0,0"/>
+                            </Viewbox>
+                            <Viewbox Height="25" Margin="10,13,0,0">
+                                <RadioButton Name="rb1Day" Checked="Rb1Day_Checked"  GroupName="AMAOptions" FontSize="22" Content="1 Day" Padding="0,-10,0,0"/>
+                            </Viewbox>
+                        </StackPanel>
+
                     </Grid>
-                </StackPanel>
-            </Grid>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Name="stkpnlButtonsList" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Margin="5" Background="Turquoise" Name="btnLoadData" Click="BtnScanData_Click" Focusable="false">
+                    <TextBlock Margin="5" FontSize="25" Text="Scan Card"/>
+                </Button>
+                <Button Margin="5" Background="Turquoise" Grid.Column="1" Name="BtnAddEntry" Click="BtnAddEntry_Click" Focusable="false">
+                    <TextBlock  Margin="5" FontSize="25" Text="Add Entry"/>
+                </Button>
+                <Button Margin="5" Background="Turquoise" Grid.Column="2" Name="BtnClear" Click="BtnClear_Click" Focusable="false" Visibility="Collapsed">
+                    <TextBlock  Margin="5" FontSize="25" Text="Clear"/>
+                </Button>
+                <Button Margin="5" Background="Turquoise" Grid.Column="3" Name="BtnDelete" Click="BtnDelete_Click" Focusable="false" Visibility="Collapsed">
+                    <TextBlock  Margin="5" FontSize="25" Text="Delete"/>
+                </Button>
+                <Button Margin="5" Background="Turquoise" Grid.Column="4" Name="BtnUpdate" Click="BtnUpdate_Click" Focusable="false" Visibility="Collapsed">
+                    <TextBlock  Margin="5" FontSize="25" Text="Update Row"/>
+                </Button>
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Window>
