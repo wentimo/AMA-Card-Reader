@@ -1,11 +1,11 @@
 Statute
 	ID 502
 	Intro "Hello guise"
+	Title II
+		Section 3
 	Title I
 		Section 1
 		Section 2
 		Section 2.1
-	Title II
-		Section 3
 	Schedule I
 	Schedule II
