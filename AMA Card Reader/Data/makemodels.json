@@ -6,7 +6,7 @@
     },
     {
       "make": "KTM",
-      "models": [ "EXC", "EXC-F", "EXC-W", "ECW", "XC-F", "XC-W", "ENDURO", "LC4", "MXC", "RXC", "SX", "SX-F", "WC" ]
+      "models": [ "EXC", "EXC-F", "EXC-W", "ECW", "XC-F", "XC-W", "Adventure", "ENDURO", "LC4", "MXC", "RXC", "SX", "SX-F", "WC" ]
     },
     {
       "make": "beta",

@@ -128,7 +128,7 @@
 
                             <StackPanel Margin="30,15,0,0" Grid.Column="4">
                                 <Viewbox Height="25">
-                                    <RadioButton Name="rbDualSport"  GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport"/>
+                                    <RadioButton Name="rbDualSport" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Dual Sport" IsChecked="True"/>
                                 </Viewbox>
                                 <Viewbox Margin="0,5,0,0" Height="25">
                                     <RadioButton Name="rbAdventure" GroupName="Options" FontSize="22" Padding="0,-10,0,0" Content="Adventure"/>

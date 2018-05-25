@@ -323,8 +323,7 @@ namespace AMA_Card_Reader
 
         private void BtnAddEntry_Click(object sender, RoutedEventArgs e)
         {
-            //*
-            if (vm.SelectedEntry.Firstname.Length < 1 || vm.SelectedEntry.AMACardNumber.Length != 7)
+            if (vm?.SelectedEntry?.Firstname?.Length < 1 || vm.SelectedEntry?.AMACardNumber?.Length != 7)
             {
                 MessageBox.Show("One of the following requirements were not met:\r\r1.Name must be at least 2 characters long\r2.AMA Must be a 7 digits long");
             }
@@ -341,9 +340,6 @@ namespace AMA_Card_Reader
             BtnDelete.Visibility = Visibility.Collapsed;
             BtnClear.Visibility = Visibility.Collapsed;
             BtnUpdate.Visibility = Visibility.Collapsed;
-
-            ClearUIScreen();
-            //*/
         }
 
         private void BtnClear_Click(object sender, RoutedEventArgs e)
@@ -554,7 +550,7 @@ namespace AMA_Card_Reader
             //*
             double value = 0;
             if (vm.SelectedEntry != null)
-            { 
+            {
                 if (Double.TryParse(vm.SelectedEntry.PaidAmount, out double dabbersPaid))
                 {
                     if (Double.TryParse(txtAMAAmount.Text, out double amaPaid))

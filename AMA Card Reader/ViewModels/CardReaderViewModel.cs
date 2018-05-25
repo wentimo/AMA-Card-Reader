@@ -1,8 +1,5 @@
 ﻿using AMA_Card_Reader.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace AMA_Card_Reader.ViewModels
 {
